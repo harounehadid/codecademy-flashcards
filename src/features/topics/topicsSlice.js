@@ -12,3 +12,5 @@ const topicsSlice = createSlice({
         }
     }
 });
+
+const selectTopics = state => state.topics;
