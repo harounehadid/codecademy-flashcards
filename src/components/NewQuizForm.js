@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import ROUTES from "../app/routes";
+import { selectTopics } from "../features/topics/topicsSlice";
+import { useSelector } from "react-redux";
+import { createNewQuiz } from "../features/quizzes/quizzesSlice";
+import { useDispatch } from "react-redux";
 
 export default function NewQuizForm() {
+  const id = uuidv4();
   const [name, setName] = useState("");
   const [cards, setCards] = useState([]);
   const [topicId, setTopicId] = useState("");
   const history = useHistory();
-  const topics = {};
+  const topics = useSelector(selectTopics);
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +26,8 @@ export default function NewQuizForm() {
     const cardIds = [];
 
     // create the new cards here and add each card's id to cardIds
-    // create the new quiz here
+    
+    dispatch(createNewQuiz({ id, name, topicId, cardIds }));
 
     history.push(ROUTES.quizzesRoute());
   };
